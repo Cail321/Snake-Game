@@ -17,7 +17,7 @@
             <h1>Snake</h1>
           </div>
         </div>
-        <span class="build-label">MVP 0.1</span>
+        <span class="build-label">MVP 0.2</span>
       </header>
 
       <section class="game-card" aria-label="贪吃蛇游戏区域">
@@ -32,7 +32,7 @@
             <div class="menu-panel">
               <span class="menu-kicker">WELCOME PLAYER</span>
               <h2>进入蛇行空间</h2>
-              <p>收集苹果让蛇变长并累计分数。碰撞和游戏结束将在下一轮迭代中接入。</p>
+              <p>收集苹果让蛇变长并累计分数。撞墙或撞到蛇身后，本局将结束。</p>
               <button id="startButton" class="primary-button" type="button">开始游戏 <span>↗</span></button>
               <p class="control-hint"><kbd>WASD</kbd> / <kbd>方向键</kbd> 控制方向</p>
             </div>
@@ -40,14 +40,22 @@
           <div id="readyPanel" class="ready-panel hidden" aria-live="polite">
             <span class="menu-kicker">SNAKE ONLINE</span>
             <h2>蛇已启动</h2>
-            <p>当前版本支持移动、吃苹果、增长和计分；碰撞与游戏结束将在下一轮接入。</p>
+              <p>收集苹果、延长身体、保持节奏。撞墙或撞到自己后，本局会结束。</p>
             <button id="backToMenuButton" class="secondary-button" type="button">返回主菜单</button>
+          </div>
+          <div id="gameOverPanel" class="ready-panel game-over-panel hidden" aria-live="assertive">
+            <span class="menu-kicker">RUN COMPLETE</span>
+            <h2>游戏结束</h2>
+            <p>本局最终得分</p>
+            <strong id="finalScore" class="final-score">000</strong>
+            <button id="restartButton" class="primary-button" type="button">重新开始 <span>↻</span></button>
+            <button id="gameOverMenuButton" class="secondary-button" type="button">返回主菜单</button>
           </div>
         </div>
 
         <footer class="footer-bar">
-          <span>V0.1 FOUNDATION</span>
-          <span>APPLE / SCORE PREVIEW</span>
+          <span>V0.2 CORE LOOP</span>
+          <span>LIVE RUN / 150MS</span>
         </footer>
       </section>
 
@@ -55,7 +63,7 @@
         <span class="note-number">01</span>
         <div>
           <h3>当前迭代范围</h3>
-          <p>网格棋盘、方向控制、苹果生成、分数累计和蛇身增长。碰撞与游戏结束将在后续明确授权后实现。</p>
+          <p>当前版本已覆盖核心循环：移动、收集、增长、计分和失败反馈。</p>
         </div>
       </section>
     </main>
