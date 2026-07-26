@@ -46,6 +46,33 @@ function resetSnake() {
   elapsedSinceTick = 0;
 }
 
+function isOppositeDirection(nextDirection) {
+  return nextDirection.x === -direction.x && nextDirection.y === -direction.y;
+}
+
+function requestDirection(nextDirection) {
+  if (isOppositeDirection(nextDirection)) return;
+  direction = nextDirection;
+}
+
+function handleDirectionKey(event) {
+  const key = event.key.toLowerCase();
+  const directions = {
+    w: { x: 0, y: -1 },
+    arrowup: { x: 0, y: -1 },
+    s: { x: 0, y: 1 },
+    arrowdown: { x: 0, y: 1 },
+    a: { x: -1, y: 0 },
+    arrowleft: { x: -1, y: 0 },
+    d: { x: 1, y: 0 },
+    arrowright: { x: 1, y: 0 },
+  };
+  const nextDirection = directions[key];
+  if (!nextDirection) return;
+  event.preventDefault();
+  requestDirection(nextDirection);
+}
+
 function moveSnakeOneStep() {
   const head = snake[0];
   const nextHead = {
@@ -106,6 +133,7 @@ function frame(timestamp) {
 
 startButton.addEventListener('click', enterPlaySpace);
 backToMenuButton.addEventListener('click', returnToMenu);
+document.addEventListener('keydown', handleDirectionKey);
 requestAnimationFrame((timestamp) => {
   lastFrameTime = timestamp;
   frame(timestamp);
