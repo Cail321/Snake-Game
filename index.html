@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07120f" />
+    <title>Snake / System 01</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">▦</span>
+          <div>
+            <p class="eyebrow">ARCADE SYSTEM / 01</p>
+            <h1>Snake</h1>
+          </div>
+        </div>
+        <span class="build-label">MVP 0.1</span>
+      </header>
+
+      <section class="game-card" aria-label="贪吃蛇游戏区域">
+        <div class="status-bar">
+          <span><i class="status-dot"></i><span id="systemStatus">SYSTEM READY</span></span>
+          <span id="modeStatus">MENU MODE</span>
+        </div>
+
+        <div class="board-wrap">
+          <canvas id="gameCanvas" width="800" height="520" aria-label="游戏棋盘占位区域"></canvas>
+          <div id="mainMenu" class="menu-overlay">
+            <div class="menu-panel">
+              <span class="menu-kicker">WELCOME PLAYER</span>
+              <h2>进入蛇行空间</h2>
+              <p>这是 V0.1 基础版本。先建立主菜单与游戏状态，下一轮再加入蛇、苹果和计分系统。</p>
+              <button id="startButton" class="primary-button" type="button">开始游戏 <span>↗</span></button>
+              <p class="control-hint"><kbd>WASD</kbd> / <kbd>方向键</kbd> 控制方向</p>
+            </div>
+          </div>
+          <div id="readyPanel" class="ready-panel hidden" aria-live="polite">
+            <span class="menu-kicker">PLAY SPACE</span>
+            <h2>棋盘已准备</h2>
+            <p>核心玩法将在下一轮迭代中接入。</p>
+            <button id="backToMenuButton" class="secondary-button" type="button">返回主菜单</button>
+          </div>
+        </div>
+
+        <footer class="footer-bar">
+          <span>V0.1 FOUNDATION</span>
+          <span>NO GAMEPLAY LOGIC YET</span>
+        </footer>
+      </section>
+
+      <section class="scope-note">
+        <span class="note-number">01</span>
+        <div>
+          <h3>当前迭代范围</h3>
+          <p>项目结构、视觉外壳、主菜单和基础状态切换。蛇、苹果、分数、碰撞将在后续明确授权后实现。</p>
+        </div>
+      </section>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>

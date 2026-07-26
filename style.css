@@ -1,0 +1,48 @@
+:root {
+  color-scheme: dark;
+  --bg: #06100d;
+  --panel: #0b1914;
+  --panel-light: #10251c;
+  --line: rgba(178, 225, 192, .17);
+  --text: #effff3;
+  --muted: #82a68e;
+  --green: #8cffb0;
+  --yellow: #e8f37b;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; color: var(--text); background: radial-gradient(circle at 50% -10%, #193c2c 0, var(--bg) 55%); font-family: 'Segoe UI', system-ui, sans-serif; }
+button { font: inherit; }
+.app-shell { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 48px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.brand { display: flex; align-items: center; gap: 13px; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(140,255,176,.45); color: var(--green); font-size: 24px; box-shadow: 0 0 24px rgba(140,255,176,.12); }
+.eyebrow, .build-label, .status-bar, .footer-bar, .menu-kicker, .control-hint { letter-spacing: .12em; text-transform: uppercase; font-family: Consolas, 'Courier New', monospace; }
+.eyebrow { margin: 0 0 4px; color: var(--green); font-size: 10px; }
+h1 { margin: 0; font-size: 26px; letter-spacing: -.05em; }
+.build-label { color: var(--muted); font-size: 10px; }
+.game-card { overflow: hidden; border: 1px solid var(--line); background: rgba(11,25,20,.86); box-shadow: 0 24px 80px rgba(0,0,0,.3); }
+.status-bar, .footer-bar { display: flex; justify-content: space-between; gap: 18px; padding: 13px 18px; color: var(--muted); font-size: 10px; }
+.status-bar { border-bottom: 1px solid var(--line); }
+.status-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+.board-wrap { position: relative; background: #07130e; }
+canvas { display: block; width: 100%; height: auto; aspect-ratio: 20 / 13; }
+.menu-overlay, .ready-panel { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(4,12,8,.72); backdrop-filter: blur(5px); }
+.menu-overlay.hidden, .ready-panel.hidden { display: none; }
+.menu-panel, .ready-panel { width: min(410px, 100%); padding: 30px; border: 1px solid rgba(140,255,176,.3); background: rgba(9,28,19,.95); text-align: center; box-shadow: 0 20px 70px rgba(0,0,0,.4); }
+.menu-kicker { color: var(--green); font-size: 10px; }
+.menu-panel h2, .ready-panel h2 { margin: 17px 0 10px; font-size: clamp(28px, 5vw, 40px); letter-spacing: -.07em; }
+.menu-panel p, .ready-panel p { max-width: 320px; margin: 0 auto 23px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.primary-button { border: 0; padding: 13px 18px; color: #06120c; background: var(--green); font-weight: 700; cursor: pointer; box-shadow: 0 0 24px rgba(140,255,176,.18); transition: transform .2s, box-shadow .2s; }
+.primary-button:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(140,255,176,.28); }
+.primary-button span { margin-left: 22px; font-size: 18px; }
+.secondary-button { width: 100%; padding: 10px 15px; border: 1px solid var(--line); color: var(--muted); background: transparent; cursor: pointer; transition: .2s; }
+.secondary-button:hover { border-color: var(--green); color: var(--text); }
+.control-hint { margin-top: 21px !important; color: #63836e !important; font-size: 10px !important; }
+kbd { padding: 3px 5px; border: 1px solid #3a5d47; color: #b3d5bc; background: #102319; }
+.footer-bar { border-top: 1px solid var(--line); }
+.scope-note { display: flex; gap: 14px; margin-top: 16px; padding: 17px; border: 1px solid var(--line); background: rgba(11,25,20,.55); }
+.note-number { color: var(--yellow); font: 12px Consolas, monospace; }
+.scope-note h3 { margin: 0 0 6px; font-size: 13px; }
+.scope-note p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+@media (max-width: 640px) { .app-shell { width: min(100% - 20px, 1040px); padding-top: 20px; } .status-bar, .footer-bar { padding: 11px 12px; font-size: 8px; } .menu-panel, .ready-panel { padding: 24px 18px; } }
