@@ -27,27 +27,27 @@
         </div>
 
         <div class="board-wrap">
-          <canvas id="gameCanvas" width="800" height="520" aria-label="游戏棋盘占位区域"></canvas>
+          <canvas id="gameCanvas" width="800" height="520" aria-label="贪吃蛇棋盘"></canvas>
           <div id="mainMenu" class="menu-overlay">
             <div class="menu-panel">
               <span class="menu-kicker">WELCOME PLAYER</span>
               <h2>进入蛇行空间</h2>
-              <p>这是 V0.1 基础版本。先建立主菜单与游戏状态，下一轮再加入蛇、苹果和计分系统。</p>
+              <p>选择开始后，蛇会在网格中按固定节奏移动。方向控制和玩法规则将在后续迭代中接入。</p>
               <button id="startButton" class="primary-button" type="button">开始游戏 <span>↗</span></button>
               <p class="control-hint"><kbd>WASD</kbd> / <kbd>方向键</kbd> 控制方向</p>
             </div>
           </div>
           <div id="readyPanel" class="ready-panel hidden" aria-live="polite">
-            <span class="menu-kicker">PLAY SPACE</span>
-            <h2>棋盘已准备</h2>
-            <p>核心玩法将在下一轮迭代中接入。</p>
+            <span class="menu-kicker">SNAKE ONLINE</span>
+            <h2>蛇已启动</h2>
+            <p>当前为移动预览：蛇沿固定方向移动，抵达边界后环绕。</p>
             <button id="backToMenuButton" class="secondary-button" type="button">返回主菜单</button>
           </div>
         </div>
 
         <footer class="footer-bar">
           <span>V0.1 FOUNDATION</span>
-          <span>NO GAMEPLAY LOGIC YET</span>
+          <span>SNAKE MOVEMENT PREVIEW</span>
         </footer>
       </section>
 
@@ -55,7 +55,7 @@
         <span class="note-number">01</span>
         <div>
           <h3>当前迭代范围</h3>
-          <p>项目结构、视觉外壳、主菜单和基础状态切换。蛇、苹果、分数、碰撞将在后续明确授权后实现。</p>
+          <p>网格棋盘、蛇的初始状态和固定节奏移动。方向控制、苹果、分数、碰撞将在后续明确授权后实现。</p>
         </div>
       </section>
     </main>
