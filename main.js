@@ -1,12 +1,10 @@
 const canvas = document.querySelector('#gameCanvas');
 const ctx = canvas.getContext('2d');
 const mainMenu = document.querySelector('#mainMenu');
-const readyPanel = document.querySelector('#readyPanel');
 const systemStatus = document.querySelector('#systemStatus');
 const modeStatus = document.querySelector('#modeStatus');
 const scoreValue = document.querySelector('#scoreValue');
 const startButton = document.querySelector('#startButton');
-const backToMenuButton = document.querySelector('#backToMenuButton');
 const gameOverPanel = document.querySelector('#gameOverPanel');
 const finalScore = document.querySelector('#finalScore');
 const restartButton = document.querySelector('#restartButton');
@@ -14,11 +12,10 @@ const gameOverMenuButton = document.querySelector('#gameOverMenuButton');
 
 let state = 'menu';
 const GRID = { columns: 20, rows: 13, cellSize: 40 };
+const game = SnakeCore.createSnakeGame({
+  grid: { columns: GRID.columns, rows: GRID.rows },
+});
 const TICK_INTERVAL_MS = 150;
-let snake = [];
-let direction = { x: 1, y: 0 };
-let apple = null;
-let score = 0;
 let elapsedSinceTick = 0;
 let lastFrameTime = 0;
 
@@ -51,46 +48,13 @@ function drawFoundationBoard() {
 }
 
 function resetSnake() {
-  snake = [
-    { x: 10, y: 6 },
-    { x: 9, y: 6 },
-    { x: 8, y: 6 },
-  ];
-  direction = { x: 1, y: 0 };
-  apple = null;
-  score = 0;
+  game.reset();
   elapsedSinceTick = 0;
-  spawnApple();
   updateScore();
 }
 
-function isSnakeSegmentAt(position, segments = snake) {
-  return segments.some((segment) => segment.x === position.x && segment.y === position.y);
-}
-
-function spawnApple() {
-  const emptyCells = [];
-  for (let y = 0; y < GRID.rows; y += 1) {
-    for (let x = 0; x < GRID.columns; x += 1) {
-      const position = { x, y };
-      if (!isSnakeSegmentAt(position)) emptyCells.push(position);
-    }
-  }
-  if (emptyCells.length === 0) return;
-  apple = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-}
-
 function updateScore() {
-  scoreValue.textContent = String(score).padStart(3, '0');
-}
-
-function isOppositeDirection(nextDirection) {
-  return nextDirection.x === -direction.x && nextDirection.y === -direction.y;
-}
-
-function requestDirection(nextDirection) {
-  if (isOppositeDirection(nextDirection)) return;
-  direction = nextDirection;
+  scoreValue.textContent = String(game.getState().score).padStart(3, '0');
 }
 
 function handleDirectionKey(event) {
@@ -109,44 +73,25 @@ function handleDirectionKey(event) {
   if (!nextDirection) return;
   if (state !== 'playing') return;
   event.preventDefault();
-  requestDirection(nextDirection);
-}
-
-function isOutsideBoard(position) {
-  return position.x < 0 || position.x >= GRID.columns || position.y < 0 || position.y >= GRID.rows;
+  game.requestDirection(nextDirection);
 }
 
 function endGame() {
   state = 'gameover';
-  readyPanel.classList.add('hidden');
   gameOverPanel.classList.remove('hidden');
-  finalScore.textContent = String(score).padStart(3, '0');
+  finalScore.textContent = String(game.getState().score).padStart(3, '0');
   systemStatus.textContent = 'RUN COMPLETE';
   modeStatus.textContent = 'GAME OVER';
 }
 
 function moveSnakeOneStep() {
-  const head = snake[0];
-  const nextHead = {
-    x: head.x + direction.x,
-    y: head.y + direction.y,
-  };
-  const eatsApple = apple && nextHead.x === apple.x && nextHead.y === apple.y;
-  const bodyToCheck = eatsApple ? snake : snake.slice(0, -1);
-  if (isOutsideBoard(nextHead) || isSnakeSegmentAt(nextHead, bodyToCheck)) {
-    endGame();
-    return;
-  }
-  snake = eatsApple ? [nextHead, ...snake] : [nextHead, ...snake.slice(0, -1)];
-  if (eatsApple) {
-    score += 1;
-    apple = null;
-    spawnApple();
-    updateScore();
-  }
+  const result = game.moveOneStep();
+  if (result.gameOver) endGame();
+  if (result.ateApple) updateScore();
 }
 
 function drawSnake() {
+  const { snake, direction } = game.getState();
   snake.forEach((segment, index) => {
     ctx.fillStyle = index === 0 ? '#e8f37b' : '#8cffb0';
     ctx.shadowColor = index === 0 ? 'rgba(232, 243, 123, .8)' : 'rgba(140, 255, 176, .35)';
@@ -168,6 +113,7 @@ function drawSnake() {
 }
 
 function drawApple() {
+  const { apple } = game.getState();
   if (!apple) return;
   const pulse = 1 + Math.sin(performance.now() / 180) * .1;
   ctx.fillStyle = '#ff7b78';
@@ -197,7 +143,6 @@ function enterPlaySpace() {
   state = 'playing';
   resetSnake();
   mainMenu.classList.add('hidden');
-  readyPanel.classList.remove('hidden');
   gameOverPanel.classList.add('hidden');
   systemStatus.textContent = 'SNAKE ONLINE';
   modeStatus.textContent = 'LIVE RUN · 150MS';
@@ -205,11 +150,8 @@ function enterPlaySpace() {
 
 function returnToMenu() {
   state = 'menu';
-  snake = [];
-  apple = null;
-  score = 0;
+  game.clear();
   updateScore();
-  readyPanel.classList.add('hidden');
   gameOverPanel.classList.add('hidden');
   mainMenu.classList.remove('hidden');
   systemStatus.textContent = 'SYSTEM READY';
@@ -231,7 +173,6 @@ function frame(timestamp) {
 }
 
 startButton.addEventListener('click', enterPlaySpace);
-backToMenuButton.addEventListener('click', returnToMenu);
 restartButton.addEventListener('click', enterPlaySpace);
 gameOverMenuButton.addEventListener('click', returnToMenu);
 document.addEventListener('keydown', handleDirectionKey);

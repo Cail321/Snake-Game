@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "check": "node --check main.js"
+    "check": "node --check game-core.js && node --check main.js",
+    "test": "node --test"
   }
 }
